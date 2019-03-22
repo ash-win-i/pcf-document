@@ -1,0 +1,151 @@
+gradle wrapper: to create a gradle wrapper
+gradle tasks: list all the gradle task
+gradlew build: build the project
+
+Project structure:
+==================
+build.gradle
+
+settings.gradle
+
+delpoy to cloud foundary:
+========================
+login to cf
+cf login
+
+to push the application to cloud pivotal without start:
+cf push pal-tracker -p ./build/libs/pal-tracker.jar --random-route(for some random url) --no-start
+cf push pal-tracker -p ./build/libs/pal-tracker.jar --random-route --no-start
+cf restage APPLICATION_NAME // after any change and
+to set the envornment
+cf set-env pal-tracker JBP_CONFIG_OPEN_JDK_JRE '{ jre: { version: 11.+ } }'
+
+we can use manifets.yml file to hav all infor. and push it using
+cf push // befre using this command, delete the app and then push the application to cf
+
+pushing the code to github:
+1. git status
+2. git add . (to add all the files// new, modified)
+
+// for first time commit use below 2 commands
+E:\CND\workspace\pal-tracker>git config --global user.email "ashwini.kumari@wipro.com"
+E:\CND\workspace\pal-tracker>git config --global user.name "ash-win-i"
+
+3. E:\CND\workspace\pal-tracker>git commit -m "pcf lab1 done successfully"
+4. git push origin master
+http://pal-tracker-insightful-dog.cfapps.io/
+
+lab3:
+======
+2 types of scaling:
+vertical scaling: to increase and decrease the memory
+horizontal scaling: to increase and decrease the instances
+
+Manual scaling can be done either with CLI commands or pcf UI.
+cf scale pal-tracker -m 768M -f
+cf scale pal-tracker -i 2
+
+Autoscaling can be done via pcf GUI.
+
+lab4:
+====
+Travis details:
+-----------------
+travis-ci.org
+login with github and sync. Pal-tracker will be there.
+So once any commit is done in github, travis will have the job created to build and once 
+build is successful, then it will be pushed to cloud foundary.
+travis.yml file will have all the details for the execution of travis pipeline.
+Will provide environment variables(CF_API_URL, CF_ORG...) to pal-tracker settings in 
+travis GUI. So that 
+on execution travis.yml wil get all the values.
+
+to create space:
+cf create-space review
+cf target -s review // changing the space from development to review
+
+to give permission to gradlew i.e from 100644 to 100755
+git ls-tree HEAD
+git update-index --chmod=+x gradlew
+git commit -m "gradlew permission changed"
+git push origin master
+
+to stop aplication:
+cf stop pal-tracker
+lab5:
+==========
+[
+{
+"id": 22,
+"projectId": 55,
+"userId": 72,
+"date": "2019-01-01",
+"hours": 8
+},
+{
+"id": 32,
+"projectId": 56,
+"userId": 72,
+"date": "2019-01-01",
+"hours": 8
+},
+{
+"id": 42,
+"projectId": 57,
+"userId": 72,
+"date": "2019-01-01",
+"hours": 8
+},
+{
+"id": 52,
+"projectId": 57,
+"userId": 73,
+"date": "2019-01-01",
+"hours": 8
+}
+]
+
+lab9
+=====
+
+
+creating Db:
+-------------
+gradlew cloudNativeDeveloperDistributedSystemDeployment -PregistrationServerUrl=https://registration-pal-ashwini.cfapps.io -PbacklogServerUrl=https://backlog-pal-ashwini.cfapps.io -PallocationsServerUrl=https://allocations-ashwini.cfapps.io -PtimesheetsServerUrl=https://timesheets-pal-ashwini.cfapps.io
+
+lab10:
+======
+GET https://registration-pal-ashwini.cfapps.io/actuator/health
+GET https://backlog-pal-ashwini.cfapps.io/actuator/health
+GET https://allocations-ashwini.cfapps.io/actuator/health
+GET https://timesheets-pal-ashwini.cfapps.io/actuator/health
+POST https://registration-pal-ashwini.cfapps.io/registration
+GET https://registration-pal-ashwini.cfapps.io/accounts?ownerId=82
+POST https://registration-pal-ashwini.cfapps.io/projects
+POST https://allocations-ashwini.cfapps.io/allocations
+POST https://backlog-pal-ashwini.cfapps.io/stories
+POST https://timesheets-pal-ashwini.cfapps.io/time-entries
+
+lab 11 circuit breaker:
+==========================
+GET https://registration-pal-ashwini.cfapps.io/actuator/health
+GET https://backlog-pal-ashwini.cfapps.io/actuator/health
+GET https://allocations-ashwini.cfapps.io/actuator/health
+GET https://timesheets-pal-ashwini.cfapps.io/actuator/health
+POST https://registration-pal-ashwini.cfapps.io/registration
+GET https://registration-pal-ashwini.cfapps.io/accounts?ownerId=92
+POST https://registration-pal-ashwini.cfapps.io/projects
+POST https://allocations-ashwini.cfapps.io/allocations
+POST https://backlog-pal-ashwini.cfapps.io/stories
+POST https://timesheets-pal-ashwini.cfapps.io/time-entries
+
+lab12:
+===========
+API endpoint:   https://api.system.dev.pcf-aws.com (API version: 2.112.0)
+User:           ashwini.kumari@wipro.com
+Org:            Pcf-training
+Space:          review_gayathri
+
+OAuth document link:
+----------------------
+https://itnext.io/an-oauth-2-0-introduction-for-beginners-6e386b19f7a9
